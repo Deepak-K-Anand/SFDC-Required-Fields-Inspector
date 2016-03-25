@@ -7,10 +7,6 @@
     </types>
     <types>
         <members>Required_Fields_Inspector</members>
-        <name>App</name>
-    </types>
-    <types>
-        <members>Required_Fields_Inspector</members>
         <name>CustomTab</name>
     </types>
     <types>

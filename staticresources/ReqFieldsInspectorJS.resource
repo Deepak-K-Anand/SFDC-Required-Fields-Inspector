@@ -104,7 +104,7 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                                     custom  : field.custom,
                                                     unique  : field.unique
                                                 }
-											);
+					    );
                                         }
                                     }
                                 );

@@ -17,7 +17,7 @@
             
             <div class="container-fluid">
                 <div class="page-header">
-                    <h1>Salesforce Required Fields Inspector <small>Deepak K Anand</small></h1>
+                    <h1>Salesforce Required Fields Inspector</h1>
                 </div>
             
                 <div class="panel panel-default">

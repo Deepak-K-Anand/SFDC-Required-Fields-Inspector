@@ -8,7 +8,7 @@ A Single Page App that lets you to determine the **Universally Required** fields
 </a>
 
 ### Inspiration
-Recently one of my close friend in the name *Mayank S.* wanted to know the different Required Fields on an object within Salesforce swiftly without going through the hassles of clicking each field one by one to know it.
+Recently one of my close friends in the name *Mayank S.* wanted to know the different Required Fields on an object within Salesforce swiftly without going through the hassles of clicking each field one by one to know it.
 
 The immediate step was to Google it and he was lucky enough to find a snippet from Stack Exchange that did it. One has to open the **Developer Console** and use the **Execute Anonymous** window to execute the script and would need to rely on the Debug Statements to know the fields all at once.
 

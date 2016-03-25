@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Required_Fields_Inspector</members>
+        <members>Required_Fields_Inspector_Tab</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Required_Fields_Inspector</members>
+        <name>App</name>
+    </types>
+    <types>
+        <members>Required_Fields_Inspector</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>ReqFieldsInspectorCSS</members>
+        <members>ReqFieldsInspectorJS</members>
+        <name>StaticResource</name>
+    </types>
+    <version>36.0</version>
+</Package>

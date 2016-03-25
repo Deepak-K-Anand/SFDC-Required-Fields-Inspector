@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>SFDC Required Fields Inspector by Deepak-K-Anand</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>SFDC Required Fields Inspector</h1>
+        <h2>A Single Page App that lets you to determine the Universally Required fields on multiple objects at once.</h2>
+        <a href="https://github.com/Deepak-K-Anand/SFDC-Required-Fields-Inspector" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="sfdc-required-fields-inspector" class="anchor" href="#sfdc-required-fields-inspector" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SFDC Required Fields Inspector</h1>
+
+<p>A Single Page App that lets you to determine the <strong>Universally Required</strong> fields on multiple objects at once.</p>
+
+<p><a href="https://githubsfdeploy.herokuapp.com?owner=Deepak-K-Anand&amp;repo=SFDC-Required-Fields-Inspector">
+  <img alt="Deploy to Salesforce" src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
+</a></p>
+
+<h3>
+<a id="inspiration" class="anchor" href="#inspiration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Inspiration</h3>
+
+<p>Recently one of my close friends in the name <a href="https://twitter.com/sriv_mayank"><em>Mayank S.</em></a> wanted to know the different Required Fields on an object within Salesforce swiftly without going through the hassles of clicking each field one by one to know it.</p>
+
+<p>The immediate step was to Google it and he was lucky enough to find a snippet from Stack Exchange that did it. One has to open the <strong>Developer Console</strong> and use the <strong>Execute Anonymous</strong> window to execute the script and would need to rely on the Debug Statements to know the fields all at once.</p>
+
+<p>This was a little tedious and since the need came in quite often, he had to find another way out! That is when he discussed the same with me and we thought we can setup a <strong>Visualforce Page</strong> that would let users to find the Required Fields on multiple objects at the same time.</p>
+
+<h3>
+<a id="technologies-used" class="anchor" href="#technologies-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technologies Used</h3>
+
+<ol>
+<li> Front End
+
+<ul>
+<li>Angular JS</li>
+<li>Bootstrap</li>
+</ul>
+</li>
+<li> Back End
+
+<ul>
+<li>Force.com AJAX Toolkit</li>
+</ul>
+</li>
+</ol>
+
+<p>Note: We can certainly use an Apex Controller and use <code>Schema.Describe</code> calls to avoid the Force.com AJAX Toolkit. </p>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>You can use the blue <strong>Deploy to Salesforce</strong> button at the top to deploy it directly to your Salesforce instance. When deployed successfully, you should be able too see a <em>Tab</em> called <strong>Required Fields Inspector</strong> provided you have assigned permissions to yourself.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/3683725/14049740/345fa41a-f2dd-11e5-9243-0034689050a0.png" alt="screenshot_2"></p>
+
+<p>You can select the object(s) and then hit the <strong>Get Required Fields</strong> button to find out all the required fields.</p>
+
+<h3>
+<a id="licensing" class="anchor" href="#licensing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Licensing</h3>
+
+<p>Completely free! Use it at your own will.</p>
+
+<h3>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Credits</h3>
+
+<p>Deepak @ <a href="http://dazeworks.com/"><strong>Dazeworks Technologies Pvt Ltd</strong></a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Deepak-K-Anand/SFDC-Required-Fields-Inspector/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Deepak-K-Anand/SFDC-Required-Fields-Inspector/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Deepak-K-Anand/SFDC-Required-Fields-Inspector"></a> is maintained by <a href="https://github.com/Deepak-K-Anand">Deepak-K-Anand</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>

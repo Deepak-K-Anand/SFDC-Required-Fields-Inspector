@@ -26,7 +26,7 @@ Note: We can certainly use an Apex Controller and use `Schema.Describe` calls to
 ### Usage
 You can use the blue **Deploy to Salesforce** button at the top to deploy it directly to your Salesforce instance. When deployed successfully, you should be able too see a *Tab* called **Required Fields Inspector** provided you have assigned permissions to yourself.
 
-![screenshot_2](https://cloud.githubusercontent.com/assets/3683725/14049740/345fa41a-f2dd-11e5-9243-0034689050a0.png)
+![Required Fields Inspector](https://cloud.githubusercontent.com/assets/3683725/14059066/4fe85ece-f35b-11e5-88f3-7f82c0204189.png)
 
 You can select the object(s) and then hit the **Get Required Fields** button to find out all the required fields.
 

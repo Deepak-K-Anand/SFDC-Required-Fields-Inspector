@@ -1,6 +1,6 @@
 # SFDC Required Fields Inspector
 
-A Single Page App that lets you to determine the **Universally Required** fields as well as the fields marked required on the **Page Layout" on different objects.
+A Single Page App that lets you to determine the **Universally Required** fields as well as the fields marked required on the **Page Layout** on different objects.
 
 <a href="https://githubsfdeploy.herokuapp.com?owner=Deepak-K-Anand&repo=SFDC-Required-Fields-Inspector">
   <img alt="Deploy to Salesforce"

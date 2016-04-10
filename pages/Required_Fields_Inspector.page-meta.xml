@@ -5,4 +5,19 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <description>Brought to you by Deepak K Anand</description>
     <label>Required Fields Inspector</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>9</minorNumber>
+        <namespace>relateiq</namespace>
+    </packageVersions>
+    <packageVersions>
+        <majorNumber>9</majorNumber>
+        <minorNumber>5</minorNumber>
+        <namespace>rh2</namespace>
+    </packageVersions>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>7</minorNumber>
+        <namespace>sf_com_apps</namespace>
+    </packageVersions>
 </ApexPage>

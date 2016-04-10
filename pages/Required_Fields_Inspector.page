@@ -31,7 +31,7 @@
                                     <small>Fetching SObjects. Please wait...</small>
                                 </h4>
                                 <select id="sObjectsList" ng-cloak="true" ng-model="ctrl.selectedSObjects" ng-change="ctrl.showRequiredFields( false )" ng-show="ctrl.sObjects.length > 0">
-                                    <option ng-repeat="sObject in ctrl.sObjects" value="{{sObject.name}}">
+                                    <option ng-repeat="sObject in ctrl.sObjects | orderBy: 'label'" value="{{sObject.name}}">
                                         {{sObject.label}}
                                     </option>
                                 </select>

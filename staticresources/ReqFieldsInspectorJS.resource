@@ -11,12 +11,7 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
             this.components          = {
                 select : {
                     initialize : function() {
-                        jQuery( "#sObjectsList" ).selectize( {
-                            delimiter   : ',',
-                            persist     : false,
-                            maxItems    : 5,
-                            sortField   : "name"
-                        } );
+                        jQuery( "#sObjectsList" ).selectize();
                     }
                 }
             };
@@ -78,10 +73,41 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                 
                 this.requiredFields = {};
                 
+                var requiredOnPageLayouts = [];
+                try {
+                    var detailLayoutSections = sforce.connection.describeLayout( this.selectedSObjects ).layouts.detailLayoutSections;
+                    
+                    detailLayoutSections.forEach(
+                        function( section ) {
+                            if( !( section.layoutRows instanceof Array ) ) {
+                                section.layoutRows = [ section.layoutRows ];
+                            }
+                            
+                            section.layoutRows.forEach(
+                                function( row ) {
+                                    if( !( row.layoutItems instanceof Array ) ) {
+                                        row.layoutItems = [ row.layoutItems ];
+                                    }
+                            
+                                    row.layoutItems.forEach(
+                                        function( item ) {
+                                            if( item.getBoolean( "required" ) ) {
+                                                requiredOnPageLayouts.push( item.layoutComponents.value );
+                                            }
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                }
+                catch( e ) {
+                }
+                
                 if( !( this.selectedSObjects instanceof Array ) ) {
                     this.selectedSObjects = [ this.selectedSObjects ];
                 }
-                
+
                 sforce.connection.describeSObjects(
                     this.selectedSObjects,
                     function( responses ) {
@@ -92,19 +118,22 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                 sObject.fields.forEach(
                                     function( field ) {
                                         if( 
-                                            field.getBoolean( "createable" ) && 
-                                            !field.getBoolean( "nillable" )  &&
-                                            field.type !== "boolean"
+                                            field.getBoolean( "createable" ) &&
+                                            field.type !== "boolean" &&
+                                            (
+                                                requiredOnPageLayouts.indexOf( field.name ) !== -1 ||
+                                                !field.getBoolean( "nillable" )
+                                            )
                                         ) {
                                             self.requiredFields[ sObject.name ].push(
                                                 {
-                                                    label   : field.label,
-                                                    name    : field.name,
-                                                    type    : field.type,
-                                                    custom  : field.custom,
-                                                    unique  : field.unique
+                                                    label                   : field.label,
+                                                    name                    : field.name,
+                                                    type                    : field.type,
+                                                    pageLayoutRequired      : !field.getBoolean( "nillable" ) || requiredOnPageLayouts.indexOf( field.name ) !== -1,
+                                                    universallyRequired     : !field.getBoolean( "nillable" )
                                                 }
-					    );
+                                            );
                                         }
                                     }
                                 );

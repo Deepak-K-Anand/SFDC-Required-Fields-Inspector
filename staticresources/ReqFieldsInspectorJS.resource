@@ -3,12 +3,13 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
     [
         "$scope",
         function( $scope ) {
-            var self                 = this;
-            this.processing          = true;
-            this.sObjects            = [];
-            this.requiredFields      = [];
-            this.requiredFieldsShown = false;
-            this.components          = {
+            var self                    = this;
+            this.processing             = true;
+            this.sObjects               = [];
+            this.requiredFields         = {};
+            this.requiredFieldsShown    = false;
+            this.requiredOnPageLayouts  = [];
+            this.components             = {
                 select : {
                     initialize : function() {
                         jQuery( "#sObjectsList" ).selectize();
@@ -31,7 +32,12 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                     function( response ) {
                         response.sobjects.forEach(
                             function( sObj ) {
-                                if( sObj.getBoolean( "createable" ) ) {
+                                if( 
+                                    sObj.getBoolean( "createable" )     && 
+                                    sObj.getBoolean( "layoutable" )     && 
+                                    !sObj.getBoolean( "customSetting" ) && 
+                                    !sObj.getBoolean( "deprecatedAndHidden" )
+                                ) {
                                     if( sObj.label !== "" ) {
                                         self.sObjects.push(
                                             {
@@ -41,19 +47,6 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                         );
                                     }
                                 }
-                            }
-                        );
-                        
-                        self.sObjects = self.sObjects.sort(
-                            function( a, b ) {
-                                if( a.name > b.name ) {
-                                    return 1;
-                                }
-                                else if( b.name > a.name ) {
-                                    return -1;
-                                }
-                                
-                                return 0;
                             }
                         );
                         
@@ -68,48 +61,15 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                 );
             };
             
-            this.getRequiredFields = function() {
-                this.showProgress( true );
+            this.getUnivRequiredFields = function() {
+                self.requiredFields = {};
                 
-                this.requiredFields = {};
-                
-                var requiredOnPageLayouts = [];
-                try {
-                    var detailLayoutSections = sforce.connection.describeLayout( this.selectedSObjects ).layouts.detailLayoutSections;
-                    
-                    detailLayoutSections.forEach(
-                        function( section ) {
-                            if( !( section.layoutRows instanceof Array ) ) {
-                                section.layoutRows = [ section.layoutRows ];
-                            }
-                            
-                            section.layoutRows.forEach(
-                                function( row ) {
-                                    if( !( row.layoutItems instanceof Array ) ) {
-                                        row.layoutItems = [ row.layoutItems ];
-                                    }
-                            
-                                    row.layoutItems.forEach(
-                                        function( item ) {
-                                            if( item.getBoolean( "required" ) ) {
-                                                requiredOnPageLayouts.push( item.layoutComponents.value );
-                                            }
-                                        }
-                                    );
-                                }
-                            );
-                        }
-                    );
-                }
-                catch( e ) {
+                if( !( self.selectedSObjects instanceof Array ) ) {
+                    self.selectedSObjects = [ self.selectedSObjects ];
                 }
                 
-                if( !( this.selectedSObjects instanceof Array ) ) {
-                    this.selectedSObjects = [ this.selectedSObjects ];
-                }
-
                 sforce.connection.describeSObjects(
-                    this.selectedSObjects,
+                    self.selectedSObjects,
                     function( responses ) {
                         responses.forEach(
                             function( sObject ) {
@@ -121,7 +81,7 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                             field.getBoolean( "createable" ) &&
                                             field.type !== "boolean" &&
                                             (
-                                                requiredOnPageLayouts.indexOf( field.name ) !== -1 ||
+                                                self.requiredOnPageLayouts.indexOf( field.name ) !== -1 ||
                                                 !field.getBoolean( "nillable" )
                                             )
                                         ) {
@@ -130,7 +90,7 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                                     label                   : field.label,
                                                     name                    : field.name,
                                                     type                    : field.type,
-                                                    pageLayoutRequired      : !field.getBoolean( "nillable" ) || requiredOnPageLayouts.indexOf( field.name ) !== -1,
+                                                    pageLayoutRequired      : !field.getBoolean( "nillable" ) || self.requiredOnPageLayouts.indexOf( field.name ) !== -1,
                                                     universallyRequired     : !field.getBoolean( "nillable" )
                                                 }
                                             );
@@ -139,7 +99,7 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                                 );
                             }
                         );
-
+                        
                         self.showRequiredFields( true );
                         
                         self.showProgress( false );
@@ -147,6 +107,58 @@ angular.module( "reqFieldsInspectApp", [] ).controller(
                         $scope.$apply();
                     }
                 );
+            };
+            
+            this.getPLRequiredFields = function( callback ) {
+                this.requiredOnPageLayouts = [];
+                
+                try {
+                    var detailLayoutSections = sforce.connection.describeLayout( 
+                        this.selectedSObjects,
+                        null,
+                        null,
+                        function( response ) {
+                            if( !( response.layouts.detailLayoutSections instanceof Array ) ) {
+                                response.layouts.detailLayoutSections = [ response.layouts.detailLayoutSections ];
+                            }
+                            
+                            response.layouts.detailLayoutSections.forEach(
+                                function( section ) {
+                                    if( !( section.layoutRows instanceof Array ) ) {
+                                        section.layoutRows = [ section.layoutRows ];
+                                    }
+                                    
+                                    section.layoutRows.forEach(
+                                        function( row ) {
+                                            if( !( row.layoutItems instanceof Array ) ) {
+                                                row.layoutItems = [ row.layoutItems ];
+                                            }
+                                            
+                                            row.layoutItems.forEach(
+                                                function( item ) {
+                                                    if( item.getBoolean( "required" ) ) {
+                                                        self.requiredOnPageLayouts.push( item.layoutComponents.value );
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    );
+                                }
+                            );
+                            
+                            callback();
+                        }
+                    );
+                }
+                catch( e ) {
+                    callback();
+                }
+            };
+            
+            this.getRequiredFields = function() {
+                this.showProgress( true );
+                
+                this.getPLRequiredFields( this.getUnivRequiredFields );
             };
             
             this.initialize = function( sessionId ) {
